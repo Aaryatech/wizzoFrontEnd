@@ -152,9 +152,7 @@ public class MasterController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("empId", empId);
 
-			ErrorMessage errorMessage = rest.postForObject(Constants.url + "/deleteEmployee", map, ErrorMessage.class);
-
-			
+			ErrorMessage errorMessage = rest.postForObject(Constants.url + "/deleteEmployee", map, ErrorMessage.class); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
