@@ -9,10 +9,20 @@
 
 </head>
 <body>
-	--%>
 
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-	<c:url var="allEmployeeList" value="/allEmployeeList"></c:url>
+	<c:url var="getUserByMobileNo" value="/getUserByMobileNo"></c:url>
+
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.css" />
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.js"></script>
 
 	<!--datepicker-->
 	<script type="text/javascript"
@@ -63,60 +73,72 @@
 				<div class="sidebarright">
 
 					<form name="frm_search" id="frm_search" method="post"
-						action="${pageContext.request.contextPath}/insertVehicle">
+						action="${pageContext.request.contextPath}/insertEmployee">
 						<input type="hidden" name="mod_ser" id="mod_ser"
 							value="search_result">
-
+						<div class="colOuter"></div>
+						<div class="colOuter"></div>
 						<div class="order-left">
-							<h2 class="pageTitle">Employee List</h2>
+							<h2 class="pageTitle">New Token</h2>
 
 						</div>
 
 						<div class="col1title" align="right">
-							<a href="${pageContext.request.contextPath}/allEmployeeList"><input
-								type="button" value="Add New Employee" class="btn btn-info">
+							<a href="${pageContext.request.contextPath}/allEmpLlist"><input
+								type="button" value="Employee List" class="btn btn-info">
 							</a>
 						</div>
 						<div class="colOuter"></div>
 						<div class="colOuter"></div>
 
+						<div class="colOuter">
+							  
+							<div class="col-md-2">
+								<div class="col1title" align="left">Mobile No*:</div>
+							</div>
+							<div class="col-md-3">
+								<input id="mob" class="form-control" placeholder="Mobile No"
+									name="mob" style="text-align: left;"
+									value="${customer.custMobNo}" pattern="^\d{10}$" type="text"
+									required>
 
+							</div>
+
+						</div>
+ 
+						<div class="colOuter">
+							<div align="center">
+								<input type="button" class="btn additem_btn" value="Serach" onclick="search();"
+												id="b1"/>
+							</div>
+
+						</div>
+						
 						<div id="table-scroll" class="table-scroll">
 						 
 
 							<div id="faux-table" class="faux-table" aria="hidden"></div>
 							<div class="table-wrap table-wrap-custbill">
-								<table id="table_grid1" class="main-table small-td">
+								<table id="table_grid" class="main-table small-td">
 									<thead>
 										<tr class="bgpink">
 											<th class="col-sm-1">Sr no.</th>
-											<th class="col-md-1">Employee Name</th>
+											<th class="col-md-1">User Name</th>
 											<th class="col-md-1">Mobile No</th>
+											<th class="col-md-1">Email</th>
 											<th class="col-md-1">Action</th>
 										</tr>
 									</thead>
 									<tbody>
-
-										<c:forEach items="${empList}" var="empList" varStatus="count">
-											<tr>
-												<td class="col-md-1"><c:out value="${count.index+1}" /></td>
-
-												<td class="col-md-1"><c:out value="${empList.empName}" /></td>
-												<td class="col-md-1"><c:out
-														value="${empList.empMobile}" /></td>
-												<td><a
-													href="${pageContext.request.contextPath}/deleteEmpByEmpId/${empList.empId}">
-														<input type="button" class="btn btn-info" value="Delete"
-														id="submit">
-												</a></td>
-											</tr>
-										</c:forEach>
+ 
 
 									</tbody>
 
 								</table>
 							</div>
 						</div>
+
+
 
 					</form>
 
@@ -149,54 +171,41 @@
 
 
 	<script>
-		function edit(suppId) {
-
-			$('#loader').show();
-
+		  
+		function search()
+		{
+			var mob=document.getElementById("mob").value; 
 			$
-					.getJSON(
-							'${allEmployeeList}',
+			.getJSON(
+					'${getUserByMobileNo}',
 
-							{
+					{
+						 
+						mob : mob, 
+						ajax : 'true'
 
-								suppId : suppId,
-								ajax : 'true'
+					},
+					function(data) {
+						
+						  	 
+								 
+						$('#table_grid td').remove(); 
+						  
+					  
 
-							},
-							function(data) {
+										var tr = $('<tr></tr>');
+										 
+										tr.append($('<td ></td>').html(1));
+										tr.append($('<td ></td>').html(data.userName));
+									  	tr.append($('<td ></td>').html(data.userMobile));
+									  	tr.append($('<td  ></td>').html(data.userEmail)); 
+								  		tr.append($('<td></td>').html('<a href="${pageContext.request.contextPath}/generateToken/'+data.userId+'" class="action_btn" ><input type="button" class="btn additem_btn" value="Generate Token" onclick="search();" id="b1"/></a> ')); 
+									    $('#table_grid tbody').append(tr);
 
-								document.getElementById("suppId").value = data.suppId;
-								document.getElementById("suppName").value = data.suppName;
-								document.getElementById("suppAdd").value = data.suppAddr;
-								document.getElementById("city").value = data.suppCity;
-								document.getElementById("mob").value = data.mobileNo;
-								document.getElementById("email").value = data.email;
-								document.getElementById("gstnNo").value = data.gstnNo;
-								document.getElementById("panNo").value = data.panNo;
-								document.getElementById("liceNo").value = data.suppFdaLic;
-								document.getElementById("creditDays").value = data.suppCreditDays;
-								document.getElementById("isSameState").value = data.isSameState;
-								document.getElementById("cancel").disabled = false;
-							});
-
-		}
-
-		function cancel1() {
-
-			//alert("cancel");
-			document.getElementById("suppId").value = "";
-			document.getElementById("suppName").value = "";
-			document.getElementById("suppAdd").value = "";
-			document.getElementById("city").value = "";
-			document.getElementById("mob").value = "";
-			document.getElementById("email").value = "";
-			document.getElementById("gstnNo").value = "";
-			document.getElementById("panNo").value = "";
-			document.getElementById("liceNo").value = "";
-			document.getElementById("creditDays").value = "";
-			document.getElementById("isSameState").value = "";
-			document.getElementById("cancel").disabled = false;
-
+								 
+					});
+			
+			
 		}
 		(function() {
 			var fauxTable = document.getElementById("faux-table");

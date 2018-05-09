@@ -45,15 +45,15 @@
 					</div></a></li>
 					
 					  
-						<%--<li><a href="${pageContext.request.contextPath}/returnManf"><div
+						<li><a href="${pageContext.request.contextPath}/issueList"><div
 						class="img">
-						<i class="fa fa-file-pdf-o icon"></i>
+						<i class="fa fa-file-o icon"></i>
 					</div>
 					<div class="title">
-						Return Manufacture<span></span>
+						Support<span></span>
 					</div></a></li>
 					
-					<li><a href="${pageContext.request.contextPath}/getCurrentStock"><div
+					<%--<li><a href="${pageContext.request.contextPath}/getCurrentStock"><div
 						class="img">
 						<i class="fa fa-file-pdf-o icon"></i>
 					</div>
