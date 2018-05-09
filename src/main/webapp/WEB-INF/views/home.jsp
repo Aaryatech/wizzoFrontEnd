@@ -125,6 +125,63 @@
 						</c:forEach>
 						</div>
 					</div>
+					
+					<div class="colOuter">
+					<a href="${pageContext.request.contextPath}/showAssignedTask" />
+				<div class="col-md-6">
+					<div class="tile tile-orange">
+						<div class="img">
+							<i class="fa fa-comments"></i>
+						</div>
+						<div class="content">
+							<p class="big">${assignedCount}</p>
+							<p class="title">Assigned</p>
+						</div>
+					</div>
+				</div>
+				
+				<a href="${pageContext.request.contextPath}/showInprogessPage" />
+				<div class="col-md-6">
+					<div class="tile tile-orange">
+						<div class="img">
+							<i class="fa fa-comments"></i>
+						</div>
+						<div class="content">
+							<p class="big">${inprogressCount}</p>
+							<p class="title">In Progress</p>
+						</div>
+					</div>
+				</div>
+					</div>
+					
+					<div class="colOuter">
+					<a href="${pageContext.request.contextPath}/showAssignedTask" />
+				<div class="col-md-6">
+					<div class="tile tile-orange">
+						<div class="img">
+							<i class="fa fa-comments"></i>
+						</div>
+						<div class="content">
+							<p class="big">${assignedCount}</p>
+							<p class="title">Assigned</p>
+						</div>
+					</div>
+				</div>
+				
+				<a href="${pageContext.request.contextPath}/showInprogessPage" />
+				<div class="col-md-6">
+					<div class="tile tile-orange">
+						<div class="img">
+							<i class="fa fa-comments"></i>
+						</div>
+						<div class="content">
+							<p class="big">${inprogressCount}</p>
+							<p class="title">In Progress</p>
+						</div>
+					</div>
+				</div>
+					</div>
+					
 					<div id="owl-example" class="owl-carousel">
 
 

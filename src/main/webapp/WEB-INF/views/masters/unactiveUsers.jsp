@@ -61,13 +61,13 @@
 
 				<div class="sidebarright">
 
-					<form name="frm_search" id="frm_search" method="post"
+					<form name="frm_search" id="frm_search"
 						action="${pageContext.request.contextPath}/insertVehicle">
 						<input type="hidden" name="mod_ser" id="mod_ser"
 							value="search_result">
 
 						<div class="order-left">
-							<h2 class="pageTitle">Device List</h2>
+							<h2 class="pageTitle">User List</h2>
 
 						</div>
 
@@ -86,32 +86,36 @@
 									<thead>
 										<tr class="bgpink">
 											<th class="col-sm-1">Sr no.</th>
-											<th class="col-md-1">Device Mac</th>
-											<th class="col-md-1">Device Ip</th>
-											<th class="col-md-1">Type</th>
-											<th class="col-md-1">Action</th>
+											<th class="col-md-1">User Name</th>
+											<th class="col-md-1">Mobile No</th>
+											<th class="col-md-1">E-mail</th>
+											<th class="col-md-1">Location</th>
+								
 										</tr>
 									</thead>
 									<tbody>
 
-										<c:forEach items="${deviceList}" var="deviceList"
+										<c:forEach items="${userList}" var="userList"
 											varStatus="count">
 											<tr>
 												<td class="col-md-1"><c:out value="${count.index+1}" /></td>
 
 												<td class="col-md-1"><c:out
-														value="${deviceList.devMac}" /></td>
-												<td class="col-md-1"><c:out value="${deviceList.devIp}" /></td>
+														value="${userList.userName}" /></td>
 												<td class="col-md-1"><c:out
-														value="${deviceList.devType}" /></td>
+														value="${userList.userMobile}" /></td>
 
+												<td class="col-md-1"><c:out
+														value="${userList.userEmail}" /></td>
 
-												<td><a
-													href="${pageContext.request.contextPath}/deleteDeviceByDevId/${deviceList.devId}"
-													onclick="if (confirm('Do you really want to delete ${deviceList.devMac}?')){return true;}else{event.stopPropagation(); event.preventDefault();};">
-														<input type="button" class="btn btn-info" value="Delete"
+												<td class="col-md-1"><c:out
+														value="${userList.userLocation}" /></td>
+
+												<%-- <td><a
+													href="${pageContext.request.contextPath}/deviceListByUserId/${userList.userId}">
+														<input type="button" class="btn btn-info" value="Details"
 														id="submit">
-												</a></td>
+												</a></td> --%>
 											</tr>
 										</c:forEach>
 
@@ -120,7 +124,6 @@
 								</table>
 							</div>
 						</div>
-
 					</form>
 
 
@@ -151,6 +154,67 @@
 	<!--easyTabs-->
 
 
+	<script>
+		function edit(suppId) {
+
+			$('#loader').show();
+
+			$
+					.getJSON(
+							'${editFrSupplier}',
+
+							{
+
+								suppId : suppId,
+								ajax : 'true'
+
+							},
+							function(data) {
+
+								document.getElementById("suppId").value = data.suppId;
+								document.getElementById("suppName").value = data.suppName;
+								document.getElementById("suppAdd").value = data.suppAddr;
+								document.getElementById("city").value = data.suppCity;
+								document.getElementById("mob").value = data.mobileNo;
+								document.getElementById("email").value = data.email;
+								document.getElementById("gstnNo").value = data.gstnNo;
+								document.getElementById("panNo").value = data.panNo;
+								document.getElementById("liceNo").value = data.suppFdaLic;
+								document.getElementById("creditDays").value = data.suppCreditDays;
+								document.getElementById("isSameState").value = data.isSameState;
+								document.getElementById("cancel").disabled = false;
+							});
+
+		}
+
+		function cancel1() {
+
+			//alert("cancel");
+			document.getElementById("suppId").value = "";
+			document.getElementById("suppName").value = "";
+			document.getElementById("suppAdd").value = "";
+			document.getElementById("city").value = "";
+			document.getElementById("mob").value = "";
+			document.getElementById("email").value = "";
+			document.getElementById("gstnNo").value = "";
+			document.getElementById("panNo").value = "";
+			document.getElementById("liceNo").value = "";
+			document.getElementById("creditDays").value = "";
+			document.getElementById("isSameState").value = "";
+			document.getElementById("cancel").disabled = false;
+
+		}
+		(function() {
+			var fauxTable = document.getElementById("faux-table");
+			var mainTable = document.getElementById("table_grid");
+			var clonedElement = table_grid.cloneNode(true);
+			var clonedElement2 = table_grid.cloneNode(true);
+			clonedElement.id = "";
+			clonedElement2.id = "";
+			fauxTable.appendChild(clonedElement);
+			fauxTable.appendChild(clonedElement2);
+		})();
+	</script>
 
 </body>
 </html>
