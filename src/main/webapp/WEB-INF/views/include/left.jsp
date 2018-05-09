@@ -61,6 +61,14 @@
 					<div class="title">
 				MQTT Server Status  <span></span>
 					</div></a></li>
+					
+					<li><a href="${pageContext.request.contextPath}/issueList"><div
+						class="img">
+						<i class="fa fa-file-o icon"></i>
+					</div>
+					<div class="title">
+				Support<span></span>
+					</div></a></li>
 					  
 					  
 					  
