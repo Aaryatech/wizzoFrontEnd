@@ -21,4 +21,12 @@ public class ErrorMessage {
 		this.isError = isError;
 	}
 
+	@Override
+	public String toString() {
+		return "ErrorMessage [message=" + message + ", isError=" + isError + "]";
+	}
+	
+	
+	
+
 }

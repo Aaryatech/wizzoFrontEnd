@@ -2,6 +2,7 @@ package com.ats.wizoo.controller;
 
 import java.util.ArrayList;
 
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import com.ats.wizoo.adminPanel.common.Constants;
 import com.ats.wizoo.model.DeviceByUserId;
 import com.ats.wizoo.model.Employee;
 import com.ats.wizoo.model.ErrorMessage;
-import com.ats.wizoo.model.LoginResponse;
+
 import com.ats.wizoo.model.User;
 
 @Controller
@@ -106,7 +107,46 @@ public class MasterController {
 		ModelAndView model = new ModelAndView("masters/allUserList");
 		try {
 
-			User[] User = rest.getForObject(Constants.url + "/getAllUserList", User[].class);
+			User[] User = rest.getForObject(Constants.url + "/getAllUserListByIsUsed", User[].class);
+			List<User> userList = new ArrayList<User>(Arrays.asList(User));
+
+			model.addObject("userList", userList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "/allUserListNeedAssistance", method = RequestMethod.GET)
+	public ModelAndView allUserListNeedAssistance(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("masters/userListNeedAssistance");
+		try {
+
+			User[] User = rest.getForObject(Constants.url + "/userListNeedAssistance", User[].class);
+			List<User> userList = new ArrayList<User>(Arrays.asList(User));
+
+			model.addObject("userList", userList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+
+	
+	
+	@RequestMapping(value = "/unactiveUsers", method = RequestMethod.GET)
+	public ModelAndView unactiveUsers(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("masters/unactiveUsers");
+		try {
+
+			User[] User = rest.getForObject(Constants.url + "/unActiveUser", User[].class);
 			List<User> userList = new ArrayList<User>(Arrays.asList(User));
 
 			model.addObject("userList", userList);
@@ -143,8 +183,7 @@ public class MasterController {
 	}
 
 	@RequestMapping(value = "/deleteEmpByEmpId/{empId}", method = RequestMethod.GET)
-	public ModelAndView deleteEmpByEmpId(@PathVariable int empId, HttpServletRequest request,
-			HttpServletResponse response) {
+	public String deleteEmpByEmpId(@PathVariable int empId, HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("masters/allEmpList");
 		try {
@@ -152,12 +191,47 @@ public class MasterController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("empId", empId);
 
-			ErrorMessage errorMessage = rest.postForObject(Constants.url + "/deleteEmployee", map, ErrorMessage.class); 
+			ErrorMessage errorMessage = rest.postForObject(Constants.url + "/deleteEmployee", map, ErrorMessage.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/allEmpLlist";
+	}
+
+	@RequestMapping(value = "/deleteDeviceByDevId/{devId}", method = RequestMethod.GET)
+	public String deleteDeviceByDevId(@PathVariable int devId, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		System.out.println("Inside delete device");
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("devId", devId);
+
+			ErrorMessage errorMessage = rest.postForObject(Constants.url + "/deleteDevice", map, ErrorMessage.class);
+			
+			System.out.println("delete response "+errorMessage.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/allUserList";
+	}
+	
+	
+	@RequestMapping(value = "/MQTTServerStatus", method = RequestMethod.GET)
+	public ModelAndView MQTTServerStatus(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("masters/MQTTServerStatus");
+		try {
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return model;
 	}
+
 
 }

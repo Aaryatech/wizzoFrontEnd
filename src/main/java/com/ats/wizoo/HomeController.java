@@ -1,8 +1,7 @@
 package com.ats.wizoo;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.util.Date;
+
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.wizoo.adminPanel.common.Constants;
+import com.ats.wizoo.model.DashboardCount;
 import com.ats.wizoo.model.LoginResponse;
 
 /**
@@ -34,11 +34,24 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+
+	RestTemplate rest = new RestTemplate();
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
 		ModelAndView mav = new ModelAndView("login");
+
+		try {
+
+			DashboardCount count = rest.getForObject(Constants.url + "/getAllCount", DashboardCount.class);
+
+			mav.addObject("count", count);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return mav;
 	}
