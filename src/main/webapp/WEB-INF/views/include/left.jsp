@@ -1,4 +1,3 @@
- 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -17,15 +16,6 @@
 		<ul>
 		 
 		 
-					<%-- <c:if test="${info.accessRight==1}"> --%>
-			
-					<!-- <li><a href="#" onClick="openNav4()"><div class="img">
-						<i class="fa fa-file-o icon"></i>
-					</div>
-					<div class="title">
-						<span>Masters</span>
-					</div></a></li> -->
-					<%-- </c:if> --%>
 			  
 					<li><a href="${pageContext.request.contextPath}/addEmployee"><div
 						class="img">
@@ -45,15 +35,44 @@
 					</div></a></li>
 					
 					  
-						<li><a href="${pageContext.request.contextPath}/issueList"><div
+					  <li><a href="${pageContext.request.contextPath}/allUserListNeedAssistance"><div
 						class="img">
 						<i class="fa fa-file-o icon"></i>
 					</div>
 					<div class="title">
-						Support<span></span>
+						 Need Assistance User List  <span></span>
 					</div></a></li>
 					
-					<%--<li><a href="${pageContext.request.contextPath}/getCurrentStock"><div
+					
+					<li><a href="${pageContext.request.contextPath}/unactiveUsers"><div
+						class="img">
+						<i class="fa fa-file-o icon"></i>
+					</div>
+					<div class="title">
+						 Unactive Users  <span></span>
+					</div></a></li>
+					  
+					  
+					  
+					<li><a href="${pageContext.request.contextPath}/MQTTServerStatus"><div
+						class="img">
+						<i class="fa fa-file-o icon"></i>
+					</div>
+					<div class="title">
+				MQTT Server Status  <span></span>
+					</div></a></li>
+					  
+					  
+					  
+						<%--<li><a href="${pageContext.request.contextPath}/returnManf"><div
+						class="img">
+						<i class="fa fa-file-pdf-o icon"></i>
+					</div>
+					<div class="title">
+						Return Manufacture<span></span>
+					</div></a></li>
+					
+					<li><a href="${pageContext.request.contextPath}/getCurrentStock"><div
 						class="img">
 						<i class="fa fa-file-pdf-o icon"></i>
 					</div>
