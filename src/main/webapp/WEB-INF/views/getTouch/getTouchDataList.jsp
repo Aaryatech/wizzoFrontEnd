@@ -1,5 +1,3 @@
-
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -9,10 +7,9 @@
 
 </head>
 <body>
-	--%>
 
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-	<c:url var="allEmployeeList" value="/allEmployeeList"></c:url>
+	<c:url var="editFrSupplier" value="/editFrSupplier"></c:url>
 
 	<!--datepicker-->
 	<script type="text/javascript"
@@ -68,46 +65,51 @@
 							value="search_result">
 
 						<div class="order-left">
-							<h2 class="pageTitle">Employee List</h2>
+							<h2 class="pageTitle">Information</h2>
 
 						</div>
 
-						<div class="col1title" align="right">
-							<a href="${pageContext.request.contextPath}/allEmployeeList"><input
-								type="button" value="Add New Employee" class="btn btn-info">
-							</a>
-						</div>
+						<%-- <div class="col1title" align="right"> 
+						<a href="${pageContext.request.contextPath}/addEmployee"><input type="button" value="Add New Employee" class="btn btn-info">
+										</a>
+					</div> --%>
 						<div class="colOuter"></div>
 						<div class="colOuter"></div>
 
 
 						<div id="table-scroll" class="table-scroll">
-						 
-
 							<div id="faux-table" class="faux-table" aria="hidden"></div>
 							<div class="table-wrap table-wrap-custbill">
 								<table id="table_grid1" class="main-table small-td">
 									<thead>
 										<tr class="bgpink">
 											<th class="col-sm-1">Sr no.</th>
-											<th class="col-md-1">Employee Name</th>
-											<th class="col-md-1">Mobile No</th>
+											<th class="col-md-1">Name</th>
+											<th class="col-md-1">Email Id</th>
+											<th class="col-md-1">Message</th>
+
 											<th class="col-md-1">Action</th>
 										</tr>
 									</thead>
 									<tbody>
 
-										<c:forEach items="${empList}" var="empList" varStatus="count">
+										<c:forEach items="${getTouchList}" var="getTouchList"
+											varStatus="count">
 											<tr>
 												<td class="col-md-1"><c:out value="${count.index+1}" /></td>
 
-												<td class="col-md-1"><c:out value="${empList.empName}" /></td>
 												<td class="col-md-1"><c:out
-														value="${empList.empMobile}" /></td>
+														value="${getTouchList.name}" /></td>
+												<td class="col-md-1"><c:out
+														value="${getTouchList.email}" /></td>
+												<td class="col-md-1"><c:out
+														value="${getTouchList.message}" /></td>
+
+
 												<td><a
-													href="${pageContext.request.contextPath}/deleteEmpByEmpId/${empList.empId}"  	
-													onclick="if (confirm('Do you really want to Delete ${empList.empName}?')){return true;}else{event.stopPropagation(); event.preventDefault();};">
-														<input type="button" class="btn btn-info" value="Delete"
+													href="${pageContext.request.contextPath}/updateGetDataList/${getTouchList.trId}"
+													onclick="if (confirm('Do you really want to update ${getTouchList.name}?')){return true;}else{event.stopPropagation(); event.preventDefault();};">
+														<input type="button" class="btn btn-info" value="Update"
 														id="submit">
 												</a></td>
 											</tr>
@@ -149,67 +151,6 @@
 	<!--easyTabs-->
 
 
-	<script>
-		function edit(suppId) {
-
-			$('#loader').show();
-
-			$
-					.getJSON(
-							'${allEmployeeList}',
-
-							{
-
-								suppId : suppId,
-								ajax : 'true'
-
-							},
-							function(data) {
-
-								document.getElementById("suppId").value = data.suppId;
-								document.getElementById("suppName").value = data.suppName;
-								document.getElementById("suppAdd").value = data.suppAddr;
-								document.getElementById("city").value = data.suppCity;
-								document.getElementById("mob").value = data.mobileNo;
-								document.getElementById("email").value = data.email;
-								document.getElementById("gstnNo").value = data.gstnNo;
-								document.getElementById("panNo").value = data.panNo;
-								document.getElementById("liceNo").value = data.suppFdaLic;
-								document.getElementById("creditDays").value = data.suppCreditDays;
-								document.getElementById("isSameState").value = data.isSameState;
-								document.getElementById("cancel").disabled = false;
-							});
-
-		}
-
-		function cancel1() {
-
-			//alert("cancel");
-			document.getElementById("suppId").value = "";
-			document.getElementById("suppName").value = "";
-			document.getElementById("suppAdd").value = "";
-			document.getElementById("city").value = "";
-			document.getElementById("mob").value = "";
-			document.getElementById("email").value = "";
-			document.getElementById("gstnNo").value = "";
-			document.getElementById("panNo").value = "";
-			document.getElementById("liceNo").value = "";
-			document.getElementById("creditDays").value = "";
-			document.getElementById("isSameState").value = "";
-			document.getElementById("cancel").disabled = false;
-
-		}
-		(function() {
-			var fauxTable = document.getElementById("faux-table");
-			var mainTable = document.getElementById("table_grid");
-			var clonedElement = table_grid.cloneNode(true);
-			var clonedElement2 = table_grid.cloneNode(true);
-			clonedElement.id = "";
-			clonedElement2.id = "";
-			fauxTable.appendChild(clonedElement);
-			fauxTable.appendChild(clonedElement2);
-		})();
-	</script>
 
 </body>
 </html>
